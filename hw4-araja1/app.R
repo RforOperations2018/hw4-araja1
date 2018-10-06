@@ -36,6 +36,7 @@ ckanUniques <- function(id, field) {
   url <- paste0("https://data.wprdc.org/api/3/action/datastore_search_sql?sql=SELECT%20DISTINCT(%22", field, "%22)%20from%20%22", id, "%22")
   c(ckanSQL(URLencode(url)))
 }
+# "<-" not "=" !
 id="e03a89dd-134a-4ee8-a2bd-62c40aeebc6f"
 neigh <- ckanUniques(id, "INCIDENTNEIGHBORHOOD")
 race <- ckanUniques(id, "RACE")
@@ -142,6 +143,7 @@ server <- function(input, output, session=session)
   # Plot for # of crimes by age
   output$plot <- renderPlotly({
     crime=swInput()
+    # fill not colour!
     ggplotly(ggplot(data=crime,aes(x=AGE,colour=GENDER))+
                geom_bar()+
                labs(title="Crimes by Age",x="AGE",y="# Crimes",colour="Gender")
@@ -151,6 +153,7 @@ server <- function(input, output, session=session)
   output$plot2 <- renderPlotly({
     crime=swInput()
     ggplotly(ggplot(data=crime,aes(x=as.Date(ARRESTTIME)))+
+               # fill not colour! again...
                geom_freqpoly(aes(colour=GENDER))+
                labs(title="OffenceTimeline",x="Timeline",y="# of Offences",colour="Gender")
              
